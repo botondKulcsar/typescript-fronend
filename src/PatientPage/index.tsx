@@ -8,7 +8,7 @@ import { Icon } from "semantic-ui-react";
 
 const PatientPage = () => {
     const { id } = useParams<{ id: string }>();
-    const [{ patients }, dispatch] = useStateValue();
+    const [{ patients, diagnosis }, dispatch] = useStateValue();
     
     let ssn: string | undefined = patients[id]?.ssn ?? undefined;
     let currentPatient = patients[id];
@@ -49,7 +49,7 @@ const PatientPage = () => {
                     <p>{e.date}  {e.description}</p>
                     <ul>
                         { e.diagnosisCodes && e.diagnosisCodes.map(c => (
-                            <li key={c}>{c}</li>
+                            <li key={c}>{c} {diagnosis[c]['name']} </li>
                         ))}
                     </ul>
                 </div>
