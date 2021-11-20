@@ -5,10 +5,11 @@ import axios from "axios";
 import { apiBaseUrl } from "../constants";
 import { Entry, Patient } from "../types";
 import { Icon } from "semantic-ui-react";
+import EntryDetails from "./EntryDetails";
 
 const PatientPage = () => {
     const { id } = useParams<{ id: string }>();
-    const [{ patients, diagnosis }, dispatch] = useStateValue();
+    const [{ patients,  }, dispatch] = useStateValue();
     
     let ssn: string | undefined = patients[id]?.ssn ?? undefined;
     let currentPatient = patients[id];
@@ -45,14 +46,13 @@ const PatientPage = () => {
             <p>occupation: {currentPatient.occupation}</p>
             { currentPatient.entries.length ? <h3>entries</h3> : ''}
             { currentPatient.entries.map((e: Entry) => (
-                <div key={e.id}>
-                    <p>{e.date}  {e.description}</p>
-                    <ul>
-                        { e.diagnosisCodes && e.diagnosisCodes.map(c => (
-                            <li key={c}>{c} {diagnosis[c]['name']} </li>
-                        ))}
-                    </ul>
-                </div>
+                <EntryDetails key={e.id} entry={e} />
+                    // <p>{e.date}  {e.description}</p>
+                    // <ul>
+                    //     { e.diagnosisCodes && e.diagnosisCodes.map(c => (
+                    //         <li key={c}>{c} {diagnosis[c]['name']} </li>
+                    //     ))}
+                    // </ul>
             ))}
         </div>
     );
